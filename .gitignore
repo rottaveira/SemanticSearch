@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/InferenceCore/NER/onnx/config.json
+/InferenceCore/NER/onnx/model.onnx
+/InferenceCore/NER/onnx/special_tokens_map.json
+/InferenceCore/NER/onnx/tokenizer.json
+/InferenceCore/NER/onnx/tokenizer_config.json
+/InferenceCore/NER/onnx/vocab.json
+/InferenceCore/NER/onnx/vocab.txt
