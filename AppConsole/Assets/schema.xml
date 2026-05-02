@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration LucenePath="C:\Indices\Lucene">
+
+	<!-- Definições reutilizáveis -->
+	<FieldTypeDefinitions>
+		<FieldType Id="TextoBusca">
+			<Analyzer Type="index" Name="Standard">
+				<Analyzer Name="LowerCase" />
+				<Analyzer Name="ASCIIFolding" />
+			</Analyzer>
+		</FieldType>
+
+		<FieldType Id="ApenasLeitura" />
+		<!-- Sem analyzers -->
+	</FieldTypeDefinitions>
+
+	<FieldList>
+		<!-- Vários campos usando o mesmo tipo -->
+		<Field Name="Titulo" FieldType="TextoBusca" Stored="true" />
+		<Field Name="Descricao" FieldType="TextoBusca" Stored="true" />
+		<Field Name="Categoria" FieldType="ApenasLeitura" Stored="true" />
+
+		<!-- Campo usando um tipo diferente -->
+		<Field Name="SKU" FieldType="ApenasLeitura" IndexMode="NotAnalyzed" />
+	</FieldList>
+
+</Configuration>

@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="AppConsole/AppConsole.csproj" />
+  <Project Path="DICore/DICore.csproj" />
+  <Project Path="DIService/DIService.csproj" />
+  <Project Path="Domain/Domain.csproj" />
+  <Project Path="InferenceCore/InferenceCore.csproj" Id="50d9b187-0b13-4e96-9a18-33c0b92497c5" />
+  <Project Path="Infrastructure/Infrastructure.csproj" />
+  <Project Path="Payload/Payload.csproj" />
+  <Project Path="SearchProvider/SearchProvider.csproj" />
+</Solution>
