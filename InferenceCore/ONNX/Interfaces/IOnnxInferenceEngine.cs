@@ -5,7 +5,6 @@ namespace InferenceCore.ONNX.Interfaces
 {
     public interface IOnnxInferenceEngine: IDisposable
     {
-        (IReadOnlyList<EncodedToken> Tokens, Tensor<float> Logits) ExecuteInference(string textToAnalyze);
-        Tensor<float> ExecuteEmbeddingInference(string textToAnalyze);
+        (IReadOnlyList<EncodedToken> Tokens, Tensor<float> Logits) ExecuteInference(string textToAnalyze); 
     }
 }
