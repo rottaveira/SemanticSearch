@@ -1,5 +1,4 @@
-﻿using Infrastructure.Util.Constants;
-using Lucene.Net.Analysis;
+﻿using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Core;   
 using Lucene.Net.Analysis.Miscellaneous; 
 using Lucene.Net.Analysis.Standard; 
@@ -9,8 +8,10 @@ using Lucene.Net.Util;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Infrastructure.Schemas;
+using Infrastructure.Lucene.Util.Constants;
 
-namespace Infrastructure.Schemas
+namespace Infrastructure.Lucene.Schemas
 {
     public class LuceneSchemaFactory
     {

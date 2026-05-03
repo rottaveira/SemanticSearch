@@ -7,14 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Catalyst" Version="26.3.60" />
+    <PackageReference Include="Catalyst.Models.English" Version="1.0.30952" />
+    <PackageReference Include="Catalyst.Models.Portuguese" Version="1.0.30952" />
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00017" />
     <PackageReference Include="Lucene.Net.Analysis.Common" Version="4.8.0-beta00017" />
     <PackageReference Include="Lucene.Net.Linq" Version="3.6.0" />
+    <PackageReference Include="Panlingo.LanguageIdentification.FastText" Version="0.7.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Search\" />
-    <Folder Include="Query\" />
+    <Folder Include="Lucene\Search\" />
+    <Folder Include="Lucene\Query\" />
   </ItemGroup>
 
   <ItemGroup>

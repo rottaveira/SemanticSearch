@@ -10,19 +10,13 @@ namespace InferenceCore.ONNX.Impl
         private InferenceSession _session = null!;
         private WordPieceTokenizer _tokenizer = null!;
 
-        public OnnxInferenceEngine()
+        public OnnxInferenceEngine(string modelPath, string vocabPath)
         {
-            LoadModel();
+            LoadModel(modelPath, vocabPath);
         }
 
-        private void LoadModel()
-        {
-            string baseDir = AppContext.BaseDirectory;
-            var modelDir = Path.Combine(baseDir, "NER", "onnx");
-
-            var modelPath = Path.Combine(modelDir, "model.onnx");
-            var vocabPath = Path.Combine(modelDir, "vocab.txt");
-
+        private void LoadModel(string modelPath, string vocabPath)
+        { 
             if (!File.Exists(modelPath))
                 throw new FileNotFoundException($"Modelo não encontrado em: {modelPath}");
 
@@ -37,31 +31,12 @@ namespace InferenceCore.ONNX.Impl
             _session = new InferenceSession(modelPath, options);
         }
 
-        /// <summary>
-        /// Executa a inferência no ONNX e retorna os tokens e o Tensor de saída (logits).
-        /// </summary>
         public (IReadOnlyList<EncodedToken> Tokens, Tensor<float> Logits) ExecuteInference(string textToAnalyze)
         {
             if (_session == null || _tokenizer == null)
                 throw new InvalidOperationException("O modelo não foi carregado.");
 
-            // 1. Obtém os IDs e os Tokens detalhados usando a API oficial do Tokenizer
-            IReadOnlyList<int> encodedIds = _tokenizer.EncodeToIds(textToAnalyze);
-            IReadOnlyList<EncodedToken> encodedTokens = _tokenizer.EncodeToTokens(textToAnalyze, out _);
-
-            // 2. Garante os tokens de controle [CLS] (101) e [SEP] (102)
-            var inputIds = encodedIds.Select(id => (long)id).ToList();
-            if (inputIds.Count == 0 || inputIds[0] != 101) inputIds.Insert(0, 101);
-            if (inputIds.Last() != 102) inputIds.Add(102);
-
-            // 3. Cria as máscaras necessárias pelo BERT
-            var attentionMask = Enumerable.Repeat(1L, inputIds.Count).ToArray();
-            var tokenTypeIds = Enumerable.Repeat(0L, inputIds.Count).ToArray();
-
-            long[] dimensions = new long[] { 1, inputIds.Count };
-            var inputTensor = new DenseTensor<long>(inputIds.ToArray(), dimensions.Select(x => (int)x).ToArray());
-            var maskTensor = new DenseTensor<long>(attentionMask, dimensions.Select(x => (int)x).ToArray());
-            var typeTensor = new DenseTensor<long>(tokenTypeIds, dimensions.Select(x => (int)x).ToArray());
+            var (inputTensor, maskTensor, typeTensor, encodedTokens) = PrepareTensors(textToAnalyze);
 
             var inputs = new List<NamedOnnxValue>
             {
@@ -70,11 +45,33 @@ namespace InferenceCore.ONNX.Impl
                 NamedOnnxValue.CreateFromTensor("token_type_ids", typeTensor)
             };
 
-            // 4. Executa a inferência
             using var results = _session.Run(inputs);
-            var outputTensor = results.First().AsTensor<float>().Clone(); 
+            var outputTensor = results.First().AsTensor<float>().Clone();
 
             return (encodedTokens, outputTensor);
+        } 
+
+        /// <summary>
+        /// Centraliza a tokenização e criação de tensores para reaproveitamento nos dois métodos.
+        /// </summary>
+        private (DenseTensor<long> inputTensor, DenseTensor<long> maskTensor, DenseTensor<long> typeTensor, IReadOnlyList<EncodedToken> encodedTokens) PrepareTensors(string text)
+        {
+            IReadOnlyList<int> encodedIds = _tokenizer.EncodeToIds(text);
+            IReadOnlyList<EncodedToken> encodedTokens = _tokenizer.EncodeToTokens(text, out _);
+
+            var inputIds = encodedIds.Select(id => (long)id).ToList();
+            if (inputIds.Count == 0 || inputIds[0] != 101) inputIds.Insert(0, 101);
+            if (inputIds.Last() != 102) inputIds.Add(102);
+
+            var attentionMask = Enumerable.Repeat(1L, inputIds.Count).ToArray();
+            var tokenTypeIds = Enumerable.Repeat(0L, inputIds.Count).ToArray();
+
+            long[] dimensions = new long[] { 1, inputIds.Count };
+            var inputTensor = new DenseTensor<long>(inputIds.ToArray(), dimensions.Select(x => (int)x).ToArray());
+            var maskTensor = new DenseTensor<long>(attentionMask, dimensions.Select(x => (int)x).ToArray());
+            var typeTensor = new DenseTensor<long>(tokenTypeIds, dimensions.Select(x => (int)x).ToArray());
+
+            return (inputTensor, maskTensor, typeTensor, encodedTokens);
         }
 
         public void Dispose()

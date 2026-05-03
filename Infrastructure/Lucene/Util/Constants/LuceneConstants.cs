@@ -1,6 +1,6 @@
 ﻿using Lucene.Net.Util;
 
-namespace Infrastructure.Util.Constants
+namespace Infrastructure.Lucene.Util.Constants
 {
     public class LuceneConstants
     {

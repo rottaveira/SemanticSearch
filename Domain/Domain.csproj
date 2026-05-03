@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DICore\DICore.csproj" />
+    <ProjectReference Include="..\InferenceCore\InferenceCore.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Payload\Payload.csproj" />
   </ItemGroup>

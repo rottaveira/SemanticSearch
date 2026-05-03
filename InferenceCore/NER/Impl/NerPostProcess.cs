@@ -13,7 +13,7 @@ namespace InferenceCore.NER.Impl
         // O modelo é treinado para reconhecer as seguintes categorias de entidades:
         private readonly string[] _labels = new string[]
         {
-            "O", "B-PER", "I-PER", "B-ORG", "I-ORG", "B-LOC", "I-LOC", "B-MISC", "I-MISC"
+            "O", "B-PER", "I-PER", "B-ORG", "I-ORG", "B-LOC", "I-LOC"
         };
 
         /// <summary>

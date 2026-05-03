@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Schemas;
 using Payload.Document;
 
-namespace Infrastructure.Index.Interface
+namespace Infrastructure.Lucene.Index.Interface
 {
     public interface ILuceneEngine
     {

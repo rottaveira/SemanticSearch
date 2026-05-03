@@ -3,6 +3,7 @@
     public interface IOnnxExecutor : IDisposable
     {
         string BuildPrompt(string input);
-        string PromptInference(string prompt = null);
+        string NerInference(string prompt = null);
+        float[] GenerateEmbedding(string prompt = null);
     }
 }

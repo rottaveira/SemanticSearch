@@ -1,12 +1,13 @@
-﻿using Infrastructure.Index.Interface;
-using Infrastructure.Schemas;
-using Infrastructure.Util.Constants;
+﻿using Infrastructure.Schemas;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Payload.Document;
+using Infrastructure.Lucene.Index.Interface;
+using Infrastructure.Lucene.Schemas;
+using Infrastructure.Lucene.Util.Constants;
 
-namespace Infrastructure.Index.Impl
+namespace Infrastructure.Lucene.Index.Impl
 {
     public class LuceneEngine : ILuceneEngine
     {

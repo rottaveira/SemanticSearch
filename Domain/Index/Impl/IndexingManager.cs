@@ -1,7 +1,7 @@
 ﻿using Domain.Index.Interfaces;
-using Infrastructure.Index.Interface;
 using Infrastructure.Schemas;
 using Payload.Document;
+using Infrastructure.Lucene.Index.Interface;
 
 namespace Domain.Index.Impl
 {

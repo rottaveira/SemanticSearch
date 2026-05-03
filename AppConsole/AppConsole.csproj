@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InferenceCore\InferenceCore.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\SearchProvider\SearchProvider.csproj" />
   </ItemGroup>
 

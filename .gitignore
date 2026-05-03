@@ -368,3 +368,5 @@ FodyWeavers.xsd
 /InferenceCore/NER/onnx/tokenizer_config.json
 /InferenceCore/NER/onnx/vocab.json
 /InferenceCore/NER/onnx/vocab.txt
+/InferenceCore/Embeddings/onnx/model.onnx
+/InferenceCore/Embeddings/onnx/vocab.txt
